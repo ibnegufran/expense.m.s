@@ -120,7 +120,7 @@ const showSuccess = () => {
       const user = JSON.parse(localStorage.getItem("user"));
       // setLoader(true)
       const res = await axios.post(
-        "http://localhost:8080/transaction/get-transaction",
+        "https://expense-m-s.onrender.com/transaction/get-transaction",
         {
           userId: user._id,
          frequency:frequency.code || "7",
@@ -150,7 +150,7 @@ const showSuccess = () => {
   const getOneYearTransactions = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.post("http://localhost:8080/transaction/get-transaction", {
+      const res = await axios.post("https://expense-m-s.onrender.com/transaction/get-transaction", {
         userId: user._id,
         frequency: "365", 
         type:"all",
@@ -174,7 +174,7 @@ const showSuccess = () => {
   const getOneMonthTransactions = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.post("http://localhost:8080/transaction/get-transaction", {
+      const res = await axios.post("https://expense-m-s.onrender.com/transaction/get-transaction", {
         userId: user._id,
         frequency: "30",
         type:"all",
@@ -197,7 +197,7 @@ const showSuccess = () => {
 
 const deleteHandler=async (row)=>{
   try {
-    await axios.post("http://localhost:8080/transaction/delete-transaction", {transactionId:row._id })
+    await axios.post("https://expense-m-s.onrender.com/transaction/delete-transaction", {transactionId:row._id })
     
     console.log(row)
     
@@ -226,7 +226,7 @@ const deleteHandler=async (row)=>{
       value.preventDefault();
       const user = JSON.parse(localStorage.getItem("user"));
       if(editable){
-        await axios.post("http://localhost:8080/transaction/edit-transaction", {
+        await axios.post("https://expense-m-s.onrender.com/transaction/edit-transaction", {
           payload:{
             ...editable,
             userId: user._id,
@@ -238,7 +238,7 @@ const deleteHandler=async (row)=>{
         // setEditable(null);
       
       }else{
-        await axios.post("http://localhost:8080/transaction/add-transaction", {
+        await axios.post("https://expense-m-s.onrender.com/transaction/add-transaction", {
           userId: user._id,
           amount,
           type: type.name,
@@ -291,7 +291,7 @@ toast.current.show({
 
   const emailRequest=async()=>{
     try {
-      await axios.post("http://localhost:8080/transaction/email-transaction");
+      await axios.post("https://expense-m-s.onrender.com/transaction/email-transaction");
     } catch (error) {
       toast.current.show({
         severity: "danger",
@@ -307,7 +307,7 @@ toast.current.show({
   //  console.log(transaction);
   useEffect(() => {
     // Connect to the WebSocket server
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket("ws://https://expense-m-s.onrender.com");
 
     // Listen for messages from the server
     socket.onmessage = (event) => {

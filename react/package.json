@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:8080",
+  "proxy": "https://expense-m-s.onrender.com/",
   "name": "react",
   "private": true,
   "version": "0.0.0",
