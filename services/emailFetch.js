@@ -32,7 +32,7 @@ const customerNames = [
   "INDOMAX ENGINEERS",
   "HALSTON GLOBAL AHMEDABAD MERCA",
   "AEROSELL HYDRAULICS PNE HDFC",
-  "SHOAIB ISMAIL KOJAR PUNJAB NAT",
+  "ISMAIL KOJAR",
   "UNIQUE HYDRAULIC SALES",
   "PREMIER AUTO INDUSTRIES",
   "INNOVATIVE TECHNOLOG",
@@ -185,8 +185,11 @@ const startEmailListener = () => {
         return;
       }
 
+      
       console.log("IMAP connection ready. Fetching emails...");
-      const date1 = new Date("2024-03-31"); // Replace with your desired start date
+      console.log("hii i am for checking...");
+
+      const date1 = new Date("2023-02-31"); // Replace with your desired start date
       const date2 = new Date(); // Replace with your desired end date
 
       // Fetch all emails within the date range (seen and unseen)

@@ -50,7 +50,7 @@ const Home = () => {
         }
       }
         const user = JSON.parse(localStorage.getItem("user"));
-     const res=await axios.post("https://expense-m-s.onrender.com/transaction/get-transaction",{
+     const res=await axios.post("https://expense-m-s-1.onrender.com/transaction/get-transaction",{
       userId: user._id,
       frequency:frequency.code || '7',
       selectedDates,
@@ -120,7 +120,7 @@ const Home = () => {
       value.preventDefault();
       const user = JSON.parse(localStorage.getItem("user"));
      await axios.post(
-        "https://expense-m-s.onrender.com/transaction/add-transaction",{
+        "https://expense-m-s-1.onrender.com/transaction/add-transaction",{
           userId: user._id,
           amount,
           type:type.name,

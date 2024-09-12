@@ -17,7 +17,7 @@ import { DashContext, DatesContext, EditContext, MenuContext, ToggleContext, Vis
 import Analysis from "./analysis";
 import DashCompo from "./dashCompo";
 import Loader from './loader';
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 const Transaction = () => {
   const { visible, setVisible } = useContext(VisibleContext);
@@ -67,8 +67,10 @@ const {days,setDays}=useContext(DatesContext)
 ];
 // console.log(type.name)
 const toast = useRef(null);
+const user = JSON.parse(localStorage.getItem("user"));
 const [category, setCategaory] = useState(null);
-const categaoryOptions = [
+let categaoryOptions=null;
+ categaoryOptions = [
   { name: "salary", code: "salary" },
   { name: "food", code: "food" },
   { name: "tip", code: "tip" },
@@ -80,6 +82,24 @@ const categaoryOptions = [
   { name: "fees", code: "fees" },
   { name: "others", code: "others" },
 ];
+
+if(user._id == "66cf1e5968f36a9508ee1a1f"){
+  categaoryOptions = [
+    { name : "VISHAL ENGINEERING C", code: "VISHAL ENGINEERING C"} ,
+    { name : "MARUTI ENGINEERING WORKS", code: "MARUTI ENGINEERING WORKS"} ,
+    { name : "MAHAVIR ENTERPRISE", code: "MAHAVIR"},
+    { name : "OUTWARD CLG MAHARASHTRA", code: "OUTWARD CLG MAHARASHTRA"},
+    { name : "TRF-NEXA:HARMEET ENTERPRISES", code: "TRF-NEXA:HARMEET ENTERPRISES"},
+    { name : "MAX MACHINERY AUTOMA", code: "MAX MACHINERY AUTOMA"},
+    { name : "INDOMAX ENGINEERS", code: "INDOMAX ENGINEERS"},
+    { name : "HALSTON GLOBAL AHMEDABAD MERCA", code: "HALSTON GLOBAL AHMEDABAD MERCA"},
+    { name : "AEROSELL HYDRAULICS PNE HDFC", code: "AEROSELL HYDRAULICS PNE HDFC"},
+    { name : "SHOAIB ISMAIL KOJAR PUNJAB NAT", code: "SHOAIB ISMAIL KOJAR PUNJAB NAT"},
+    { name : "UNIQUE HYDRAULIC SALES", code: "UNIQUE HYDRAULIC SALES"},
+    { name : "PREMIER AUTO INDUSTRIES", code: "PREMIER AUTO INDUSTRIES"},
+    { name : "INNOVATIVE TECHNOLOG", code: "INNOVATIVE TECHNOLOG"},
+  ];
+}
 
 // frequency option s
 
@@ -117,10 +137,10 @@ const showSuccess = () => {
           return;
         }
       }
-      const user = JSON.parse(localStorage.getItem("user"));
+    
       // setLoader(true)
       const res = await axios.post(
-        "https://expense-m-s.onrender.com/transaction/get-transaction",
+        "https://expense-m-s-1.onrender.com/transaction/get-transaction",
         {
           userId: user._id,
          frequency:frequency.code || "7",
@@ -150,7 +170,7 @@ const showSuccess = () => {
   const getOneYearTransactions = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.post("https://expense-m-s.onrender.com/transaction/get-transaction", {
+      const res = await axios.post("https://expense-m-s-1.onrender.com/transaction/get-transaction", {
         userId: user._id,
         frequency: "365", 
         type:"all",
@@ -174,7 +194,7 @@ const showSuccess = () => {
   const getOneMonthTransactions = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.post("https://expense-m-s.onrender.com/transaction/get-transaction", {
+      const res = await axios.post("https://expense-m-s-1.onrender.com/transaction/get-transaction", {
         userId: user._id,
         frequency: "30",
         type:"all",
@@ -197,7 +217,7 @@ const showSuccess = () => {
 
 const deleteHandler=async (row)=>{
   try {
-    await axios.post("https://expense-m-s.onrender.com/transaction/delete-transaction", {transactionId:row._id })
+    await axios.post("https://expense-m-s-1.onrender.com/transaction/delete-transaction", {transactionId:row._id })
     
     console.log(row)
     
@@ -226,7 +246,7 @@ const deleteHandler=async (row)=>{
       value.preventDefault();
       const user = JSON.parse(localStorage.getItem("user"));
       if(editable){
-        await axios.post("https://expense-m-s.onrender.com/transaction/edit-transaction", {
+        await axios.post("https://expense-m-s-1.onrender.com/transaction/edit-transaction", {
           payload:{
             ...editable,
             userId: user._id,
@@ -238,7 +258,7 @@ const deleteHandler=async (row)=>{
         // setEditable(null);
       
       }else{
-        await axios.post("https://expense-m-s.onrender.com/transaction/add-transaction", {
+        await axios.post("https://expense-m-s-1.onrender.com/transaction/add-transaction", {
           userId: user._id,
           amount,
           type: type.name,
@@ -275,23 +295,12 @@ toast.current.show({
       console.log(error);
     }
   };
-  // const socket = io("http://localhost:8080"); // Adjust the URL as needed
-
-  // useEffect(() => {
-  //   // Listen for new transactions
-  //   socket.on("newTransaction", (transaction) => {
-  //     setTransactions((prev) => [...prev, transaction]);
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+ 
 
 
   const emailRequest=async()=>{
     try {
-      await axios.post("https://expense-m-s.onrender.com/transaction/email-transaction");
+      await axios.post("https://expense-m-s-1.onrender.com/transaction/email-transaction");
     } catch (error) {
       toast.current.show({
         severity: "danger",
@@ -305,25 +314,7 @@ toast.current.show({
   
   
   //  console.log(transaction);
-  useEffect(() => {
-    // Connect to the WebSocket server
-    const socket = new WebSocket("ws://https://expense-m-s.onrender.com");
-
-    // Listen for messages from the server
-    socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-
-      if (message.type === "new-email") {
-        // Update the state with the new email data
-        setTransaction((prevEmails) => [...prevEmails, message.data]);
-      }
-    };
-
-    // Cleanup the WebSocket connection when the component unmounts
-    return () => {
-      socket.close();
-    };
-  }, []);
+ 
   useEffect(() => {
     getAlltransaction();
     // emailRequest();
@@ -370,8 +361,8 @@ const {menu,setMenu}=useContext(MenuContext);
       <Toast ref={toast} pt={{ message: "p-2", icon: "mx-4" }} />
       {/* <Button label="Success" severity="success" onClick={showSuccess} />      */}
       <div className={`filters  col-12 col-md 10  rounded-3 flex justify-content-between px-md-6 align-items-center shadow-sm  bg-gray-500 mx-auto py-4 mt-4  ${toggle === "dashboard" ? "d-none" : "inlie-block"}`}>
-        <div className="text-capitalize fs-4   me-4">
-          <h2  className="text-capitalize fs-4 text-gray-300 ">select frequency</h2>
+        <div className="text-capitalize fs-4   me-4 flex justify-content-between flex-column align-items-center">
+          <h2  className="text-capitalize fs-4 text-gray-300 h-4rem">select frequency</h2>
           <Dropdown
             value={frequency}
             onChange={(e) => setFrequency(e.value)}
@@ -405,7 +396,7 @@ const {menu,setMenu}=useContext(MenuContext);
           />
           </div>
       )}
-        <div className="text-capitalize fs-4 ">
+        <div className="text-capitalize fs-4 flex justify-content-between flex-column align-items-center h-7rem">
           <h2 className="text-capitalize fs-4   me-4 text-gray-200">select type</h2>
           <Dropdown
             value={typeFilter}

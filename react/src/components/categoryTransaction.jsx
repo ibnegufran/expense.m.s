@@ -18,7 +18,7 @@ const CategoryTransaction = ({ transaction }) => {
     "MARUTI ENGINEERING WORKS",
     "MAHAVIR ENTERPRISE",
     "OUTWARD CLG MAHARASHTRA",
-    "HARMEET ENTERPRISES",
+    "TRF-NEXA:HARMEET ENTERPRISES",
     "MAX MACHINERY AUTOMA",
     "INDOMAX ENGINEERS",
     "HALSTON GLOBAL AHMEDABAD MERCA",
@@ -32,6 +32,7 @@ const CategoryTransaction = ({ transaction }) => {
   const totalIncomeTurnover=transaction.filter(transaction=>transaction.type == 'income').reduce((acc,transaction)=>acc+transaction.amount,0);
   // console.log(totalIncomeTurnover)
   const totalExpenseTurnover=transaction.filter(transaction=>transaction.type == 'expense').reduce((acc,transaction)=>acc+transaction.amount,0);
+  
 useEffect(()=>{
 <CategoryTransaction />
 },[transaction,totalIncomeTurnover])
@@ -50,7 +51,7 @@ useEffect(()=>{
           return(
             amount > 0 && (
             <div className="my-2 flex flex-column justify-content-between align-items-start " key={index}>
-                <h5 className="text-white text-capitalize">{category}</h5>
+                <h5 className="text-white text-capitalize">{category} <span>( {amount} )</span></h5>
                 <div className="col-12 w-full">
                 <ProgressBar value={amountPercent} color="#EAB308"  unstyled={false} className="" pt={{
                     root:'w-18rem md:w-25rem',
@@ -79,7 +80,7 @@ useEffect(()=>{
           return(
             amount > 0 && (
             <div className="my-2" key={index}>
-                <h5 className="text-white text-capitalize">{category}</h5>
+                <h5 className="text-white text-capitalize">{category} <span>( {amount} )</span></h5>
                 <div className="col-12 w-full">
                 <ProgressBar value={amountPercent} color="#EAB308"  unstyled={false} className="" pt={{
                     root:'w-18rem md:w-25rem',

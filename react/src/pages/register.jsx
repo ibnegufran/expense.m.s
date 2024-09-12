@@ -27,7 +27,7 @@ const handleSubmit=async(value)=>{
     value.preventDefault();
     setLoading(true);
         
-  let send= await axios.post("http://localhost:8080/auth/register",{name,email,password})
+  let send= await axios.post("https://expense-m-s-1.onrender.com/auth/register",{name,email,password})
   setLoading(false);
 
   console.log(send);
